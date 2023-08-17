@@ -32,9 +32,16 @@ px = Picarx()
 def take_photo():
     _time = strftime('%Y-%m-%d-%H-%M-%S',localtime(time()))
     name = 'photo_%s'%_time
-    path = "/home/pi/Pictures/picar-x/"
+    path = "./images/"
     Vilib.take_photo(name, path)
     print('\nphoto save as %s%s.jpg'%(path,name))
+
+def take_photo_to_cloud():
+    _time = strftime('%Y-%m-%d-%H-%M-%S',localtime(time()))
+    name = 'photo_%s'%_time
+    path = "/home/pi/mnt/GoogleDrive/test/"
+    Vilib.take_photo(name, path)
+    print('\nphoto save as %s%s.jpg to cloud'%(path,name))
 
 
 def move(operate:str, speed):
@@ -105,7 +112,8 @@ def main():
             move(status, speed)  
         # take photo
         elif key == 't':
-            take_photo()
+            #take_photo()
+            take_photo_to_cloud()
         # quit
         elif key == readchar.key.CTRL_C:
             print('\nquit ...')

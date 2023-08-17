@@ -1,0 +1,1 @@
+sudo mv ./images/*.* /home/pi/mnt/GoogleDrive/test
