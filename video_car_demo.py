@@ -8,16 +8,6 @@ from vilib import Vilib
 from time import sleep, time, strftime, localtime
 import readchar
 
-from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
-
-# If modifying these scopes, delete the file token.json.
-SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly']
-
-
 reset_mcu()
 sleep(0.2)
 
@@ -39,35 +29,12 @@ Press key to call the function(non-case sensitive):
 
 px = Picarx()
 
-def UploadToDrive(filepath, filename):
-    import json
-    import requests
-    headers = {"Authorization":"Bearer ya29.a0AWY7CklALN6brAkBX0ZlcbYeH0c2tt2whXmIFvJL17TuRc1hEq-RLI_gddW-hLEQGAqzYZg5aMhiB8NOVeoV7uT2J9bpu3rEbKDZaijaw5KAibXeBTSzswKxERnIif5JVv_Hnvo8XKJZmas8uCMy6XLeSbVdaCgYKAVwSARMSFQG1tDrps_HIxmX1P2f0pQp9uA_6VQ0163"}
-
-    para = {
-        "name":filename,
-        "parents":["1T5L247Fa0iAKPEkQAwJOnJJHx5IfMDrd"]
-    }
-    files = {
-        'data':('metadata',json.dumps(para),'application/json;charset=UTF-8'),
-        'file':open(filepath,'rb')
-    }
-
-    r = requests.post("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart",
-    headers=headers,
-    files=files
-    )
-    print(f"Uploaded {filename} to Drive")
-
-
 def take_photo():
     _time = strftime('%Y-%m-%d-%H-%M-%S',localtime(time()))
     name = 'photo_%s'%_time
     path = "/home/pi/Pictures/picar-x/"
     Vilib.take_photo(name, path)
     print('\nphoto save as %s%s.jpg'%(path,name))
-    filepath = path + name + '.jpg'
-    UploadToDrive(filepath, name)
 
 
 def move(operate:str, speed):
